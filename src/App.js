@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { createRef, useEffect, useState } from "react";
 import { Modal } from "react-responsive-modal";
 import 'react-responsive-modal/styles.css';
 import { palabras } from "./utils/palabras";
@@ -12,12 +12,16 @@ export default function App() {
   const [update, setUpdate] = useState(false);
   const [status, setStatus] = useState("");
   const [modalOpen, setModalOpen] = useState(false)
+
+  const inputRef = createRef(null);
+
   useEffect(() => {
     const secretWordIndex = Math.floor(Math.random() * palabras.length);
     const newSecretWord = palabras[secretWordIndex]
       .normalize("NFD")
       .replace(/[\u0300-\u036f]/g, "");
     setSecretWord(newSecretWord);
+    inputRef.current.focus();
   }, [update]);
 
   const sendWord = () => {
@@ -34,6 +38,7 @@ export default function App() {
       setTries(newTries);
       setWord("");
     }
+    inputRef.current.focus();
   };
 
   const getGifUrl = status => {
@@ -55,47 +60,24 @@ export default function App() {
     setUpdate(!update)
     setModalOpen(false)
     setStatus("")
+    inputRef.current.focus();
   }
 
   return (
-    <div className="flex flex-col justify-between min-h-screen">
+    <div className="flex flex-col justify-between items-center min-h-screen">
       <div
         onClick={(e) => {
           console.log(e.key);
           if (e.key === "enter") return alert("hola");
         }}
-        className="flex flex-col items-center p-4"
+        className="flex flex-col items-center p-4 gap-8"
       >
-        <div className="flex gap-2 items-center justify-center">
+        <div className="flex items-center justify-center gap-8">
           <picture className="w-12 h-12 flex justify-center items-center"><img src="/palabrable_64.png" alt="logo" /></picture>
           <div className="flex flex-col items-baseline">
             <h1 className="text-center font-semibold text-2xl">PALABRA-BLE</h1>
             <h2 className="text-sm font-semibold italic text-orange-500">A que no puedes jugar sólo una</h2>
           </div>
-        </div>
-        <div className="flex gap-2 items-center w-full">
-          <input
-            type="text"
-            className="outline-none py-1 px-2 m-4 ml-0 shadow-lg rounded-lg focus:ring ring-green-200 flex-grow"
-            placeholder="Escribe una palabra de 5 letras"
-            autoFocus={true}
-            value={word}
-            disabled={status !== ""}
-            onChange={(e) => setWord(e.target.value.substr(0, 5))}
-            onKeyDown={(e) => e.key === "Enter" && sendWord()}
-          />
-
-          {status === "" ? <button
-            className="bg-green-400 border-none shadow-lg rounded-lg py-1 px-2 text-white"
-            onClick={sendWord}
-          >
-            Enviar
-          </button> : <button
-            className="bg-blue-400 border-none shadow-lg mx-4 rounded-lg py-1 px-2 text-white"
-            onClick={reset}
-          >
-            Reiniciar
-          </button>}
         </div>
         <div className="flex flex-col items-center justify-center gap-4 max-w-2xl">
           {tries.map((tr, i) => i !== tryNumber ? (
@@ -133,6 +115,31 @@ export default function App() {
             </div>
           ))}
         </div>
+      </div>
+      <div className="flex gap-2 items-center w-full max-w-2xl">
+        <input
+          type="text"
+          className="outline-none py-1 px-2 m-4 ml-0 shadow-lg rounded-lg focus:ring ring-green-200 flex-grow"
+          placeholder="Escribe una palabra de 5 letras"
+          ref={inputRef}
+          autoFocus={true}
+          value={word}
+          disabled={status !== ""}
+          onChange={(e) => setWord(e.target.value.substr(0, 5))}
+          onKeyDown={(e) => e.key === "Enter" && sendWord()}
+        />
+
+        {status === "" ? <button
+          className="bg-green-400 border-none shadow-lg rounded-lg py-1 px-2 text-white"
+          onClick={sendWord}
+        >
+          Enviar
+        </button> : <button
+          className="bg-blue-400 border-none shadow-lg mx-4 rounded-lg py-1 px-2 text-white"
+          onClick={reset}
+        >
+          Reiniciar
+        </button>}
       </div>
       <span className="mb-4 text-center italic text-sm text-slate-500">Juego desarrollado por <a href="https://gorkavillar.dev" target="_blank noreferrer" className="underline">Gorka Villar</a></span>
       <Modal
