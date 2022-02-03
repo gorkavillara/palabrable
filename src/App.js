@@ -24,7 +24,6 @@ export default function App() {
     setTryNumber(tryNumber + 1);
     const newTries = tries;
     newTries[tryNumber] = word;
-    console.log(tryNumber)
     if (word === secretWord) {
       setStatus("success")
       setModalOpen(true)
@@ -65,12 +64,16 @@ export default function App() {
           console.log(e.key);
           if (e.key === "enter") return alert("hola");
         }}
-        className="p-4"
+        className="flex flex-col items-center p-4"
       >
         <div className="flex gap-2 items-center justify-center">
           <picture className="w-12 h-12 flex justify-center items-center"><img src="/palabrable_64.png" alt="logo" /></picture>
-          <div className="flex flex-col items-baseline"><h1 className="text-center font-semibold text-2xl">PALABRA-BLE</h1><h2 className="text-sm font-semibold italic text-orange-500">A que no puedes jugar sólo una</h2></div></div>
-        <div className="flex gap-2 items-center">
+          <div className="flex flex-col items-baseline">
+            <h1 className="text-center font-semibold text-2xl">PALABRA-BLE</h1>
+            <h2 className="text-sm font-semibold italic text-orange-500">A que no puedes jugar sólo una</h2>
+          </div>
+        </div>
+        <div className="flex gap-2 items-center w-full">
           <input
             type="text"
             className="outline-none py-1 px-2 m-4 ml-0 shadow-lg rounded-lg focus:ring ring-green-200 flex-grow"
@@ -92,14 +95,15 @@ export default function App() {
             onClick={reset}
           >
             Reiniciar
-          </button>}</div>
+          </button>}
+        </div>
         <div className="flex flex-col items-center justify-center gap-4 max-w-2xl">
           {tries.map((tr, i) => i !== tryNumber ? (
             <div key={i} className="w-full grid grid-cols-5 gap-4">
               {[0, 1, 2, 3, 4].map((j) => (
                 <div
                   key={j}
-                  className={`border flex justify-center items-center uppercase h-24 text-5xl 
+                  className={`border w-16 sm:w-24 h-16 sm:h-24 flex justify-center items-center uppercase text-5xl 
                 ${typeof tr.at(j) === "undefined"
                       ? "bg-white"
                       : tr.at(j) === secretWord.at(j)
@@ -107,7 +111,11 @@ export default function App() {
                         : secretWord.indexOf(tr.at(j)) === -1
                           ? "bg-gray-500 text-white"
                           : "bg-yellow-400"
-                    }`}
+                    }
+                    ${
+                      i > tryNumber && "opacity-40"
+                    }
+                    `}
                 >
                   {tr.at(j)}
                 </div>
@@ -118,7 +126,7 @@ export default function App() {
               {[0, 1, 2, 3, 4].map((j) => (
                 <div
                   key={j}
-                  className={`border flex justify-center items-center uppercase bg-white h-24 text-5xl`}
+                  className={`border w-16 sm:w-24 h-16 sm:h-24 flex justify-center items-center uppercase bg-white text-5xl`}
                 >
                   {word.at(j)}
                 </div>
