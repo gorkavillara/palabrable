@@ -1,4 +1,4 @@
-import { createRef, useEffect, useState } from "react";
+import { useRef, useEffect, useState } from "react";
 import { Modal } from "react-responsive-modal";
 import 'react-responsive-modal/styles.css';
 import { palabras } from "./utils/palabras";
@@ -13,7 +13,7 @@ export default function App() {
   const [status, setStatus] = useState("");
   const [modalOpen, setModalOpen] = useState(false)
 
-  const inputRef = createRef(null);
+  const inputRef = useRef(null);
 
   useEffect(() => {
     const secretWordIndex = Math.floor(Math.random() * palabras.length);
