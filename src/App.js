@@ -24,7 +24,7 @@ export default function App() {
       .replace(/[\u0300-\u036f]/g, "");
     setSecretWord(newSecretWord);
     inputRef.current.focus();
-  }, [update]);
+  }, [secretWordIndex]);
 
   const sendWord = () => {
     setTryNumber(tryNumber + 1);
@@ -38,8 +38,8 @@ export default function App() {
       setModalOpen(true)
     } else {
       setTries(newTries);
-      setWord("");
     }
+    setWord("");
     inputRef.current.focus();
   };
 
