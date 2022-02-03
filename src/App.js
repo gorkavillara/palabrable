@@ -58,7 +58,7 @@ export default function App() {
   }
 
   return (
-    <div>
+    <div className="flex flex-col justify-between min-h-screen">
       <div
         onClick={(e) => {
           console.log(e.key);
@@ -112,8 +112,7 @@ export default function App() {
                           ? "bg-gray-500 text-white"
                           : "bg-yellow-400"
                     }
-                    ${
-                      i > tryNumber && "opacity-40"
+                    ${i > tryNumber && "opacity-40"
                     }
                     `}
                 >
@@ -135,6 +134,7 @@ export default function App() {
           ))}
         </div>
       </div>
+      <span className="mb-4 text-center italic text-sm text-slate-500">Juego desarrollado por <a href="https://gorkavillar.dev" target="_blank noreferrer" className="underline">Gorka Villar</a></span>
       <Modal
         showCloseIcon={false}
         open={modalOpen}
