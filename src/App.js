@@ -34,7 +34,7 @@ export default function App() {
     setTryNumber(tryNumber + 1);
     const newTries = tries;
     newTries[tryNumber] = word;
-    if (word === secretWord) {
+    if (word.toLowerCase() === secretWord.toLowerCase()) {
       setStatus("success")
       setModalOpen(true)
     } else if (tryNumber === 4) {
