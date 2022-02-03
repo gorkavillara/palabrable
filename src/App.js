@@ -1,4 +1,4 @@
-import { useRef, useEffect, useState } from "react";
+import { useRef, useEffect, useState, useMemo } from "react";
 import { Modal } from "react-responsive-modal";
 import 'react-responsive-modal/styles.css';
 import { palabras } from "./utils/palabras";
@@ -12,11 +12,13 @@ export default function App() {
   const [update, setUpdate] = useState(false);
   const [status, setStatus] = useState("");
   const [modalOpen, setModalOpen] = useState(false)
+  const [juego, setJuego] = useState("Juego")
 
   const inputRef = useRef(null);
 
+  const secretWordIndex = useMemo(() => Math.floor(Math.random() * palabras.length), [update]);
+
   useEffect(() => {
-    const secretWordIndex = Math.floor(Math.random() * palabras.length);
     const newSecretWord = palabras[secretWordIndex]
       .normalize("NFD")
       .replace(/[\u0300-\u036f]/g, "");
@@ -140,7 +142,7 @@ export default function App() {
           Reiniciar
         </button>}
       </div>
-      <span className="mb-4 text-center italic text-sm text-slate-500">Juego desarrollado por <a href="https://gorkavillar.dev" target="_blank noreferrer" className="underline">Gorka Villar</a></span>
+      <span className="mb-4 text-center italic text-sm text-slate-500"><span onClick={() => setJuego(secretWord)}>{juego}</span> desarrollado por <a href="https://gorkavillar.dev" target="_blank noreferrer" className="underline">Gorka Villar</a></span>
       <Modal
         showCloseIcon={false}
         open={modalOpen}
