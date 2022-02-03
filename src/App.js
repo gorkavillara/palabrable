@@ -1,10 +1,11 @@
-import { useRef, useEffect, useState, useMemo } from "react";
+import { useRef, useEffect, useState } from "react";
 import { Modal } from "react-responsive-modal";
 import 'react-responsive-modal/styles.css';
 import { palabras } from "./utils/palabras";
 import { successGifs, failGifs } from "./utils/list";
 
 export default function App() {
+  const [secretWordIndex, setSecretWordIndex] = useState(0);
   const [secretWord, setSecretWord] = useState("");
   const [word, setWord] = useState("");
   const [tries, setTries] = useState(["", "", "", "", ""]);
@@ -16,7 +17,10 @@ export default function App() {
 
   const inputRef = useRef(null);
 
-  const secretWordIndex = useMemo(() => Math.floor(Math.random() * palabras.length), [update]);
+  useEffect(() => {
+    const index = Math.floor(Math.random() * palabras.length);
+    setSecretWordIndex(index);
+  }, [update]);
 
   useEffect(() => {
     const newSecretWord = palabras[secretWordIndex]
