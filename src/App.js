@@ -116,10 +116,10 @@ export default function App() {
           ))}
         </div>
       </div>
-      <div className="flex gap-2 items-center w-full max-w-2xl">
+      <div className="flex gap-2 px-4 items-center w-full max-w-2xl">
         <input
           type="text"
-          className="outline-none py-1 px-2 m-4 ml-0 shadow-lg rounded-lg focus:ring ring-green-200 flex-grow"
+          className="outline-none py-2 px-4 m-4 ml-0 shadow-lg rounded-lg focus:ring ring-green-200 flex-grow"
           placeholder="Escribe una palabra de 5 letras"
           ref={inputRef}
           autoFocus={true}
@@ -128,14 +128,13 @@ export default function App() {
           onChange={(e) => setWord(e.target.value.substr(0, 5))}
           onKeyDown={(e) => e.key === "Enter" && sendWord()}
         />
-
         {status === "" ? <button
-          className="bg-green-400 border-none shadow-lg rounded-lg py-1 px-2 text-white"
+          className="bg-green-400 border-none shadow-lg rounded-lg py-2 px-4 text-white"
           onClick={sendWord}
         >
           Enviar
         </button> : <button
-          className="bg-blue-400 border-none shadow-lg mx-4 rounded-lg py-1 px-2 text-white"
+          className="bg-blue-400 border-none shadow-lg rounded-lg py-2 px-4 text-white"
           onClick={reset}
         >
           Reiniciar
