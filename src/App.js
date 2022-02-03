@@ -94,9 +94,9 @@ export default function App() {
                   className={`border w-16 sm:w-24 h-16 sm:h-24 flex justify-center items-center uppercase text-5xl 
                 ${typeof tr.at(j) === "undefined"
                       ? "bg-white"
-                      : tr.at(j) === secretWord.at(j)
+                      : tr.at(j).toLowerCase() === secretWord.at(j).toLowerCase()
                         ? "bg-green-400 text-white"
-                        : secretWord.indexOf(tr.at(j)) === -1
+                        : secretWord.toLowerCase().indexOf(tr.at(j).toLowerCase()) === -1
                           ? "bg-gray-500 text-white"
                           : "bg-yellow-400"
                     }
