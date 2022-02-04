@@ -1,8 +1,9 @@
-import { useRef, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { Modal } from "react-responsive-modal";
 import 'react-responsive-modal/styles.css';
 import { palabras } from "./utils/palabras";
 import { successGifs, failGifs } from "./utils/list";
+import Keyboard from "./components/Keyboard";
 
 export default function App() {
   const [secretWordIndex, setSecretWordIndex] = useState(0);
@@ -15,8 +16,6 @@ export default function App() {
   const [modalOpen, setModalOpen] = useState(false)
   const [juego, setJuego] = useState("Juego")
 
-  const inputRef = useRef(null);
-
   useEffect(() => {
     const index = Math.floor(Math.random() * palabras.length);
     setSecretWordIndex(index);
@@ -27,7 +26,6 @@ export default function App() {
       .normalize("NFD")
       .replace(/[\u0300-\u036f]/g, "");
     setSecretWord(newSecretWord);
-    inputRef.current.focus();
   }, [secretWordIndex]);
 
   const sendWord = () => {
@@ -44,7 +42,6 @@ export default function App() {
       setTries(newTries);
     }
     setWord("");
-    inputRef.current.focus();
   };
 
   const getGifUrl = status => {
@@ -66,7 +63,16 @@ export default function App() {
     setUpdate(!update)
     setModalOpen(false)
     setStatus("")
-    inputRef.current.focus();
+  }
+
+  const type = key => {
+    if (key === "send") {
+      return sendWord();
+    }
+    if (key === "back") {
+      return setWord(word.substring(0, word.length - 1))
+    }
+    return setWord(word + key)
   }
 
   return (
@@ -76,7 +82,7 @@ export default function App() {
           console.log(e.key);
           if (e.key === "enter") return alert("hola");
         }}
-        className="flex flex-col items-center p-4 gap-8"
+        className="flex flex-col items-center p-6 gap-8"
       >
         <div className="flex items-center justify-center gap-8">
           <picture className="w-12 h-12 flex justify-center items-center"><img src="/palabrable_64.png" alt="logo" /></picture>
@@ -85,13 +91,13 @@ export default function App() {
             <h2 className="text-sm font-semibold italic text-orange-500">A que no puedes jugar sólo una</h2>
           </div>
         </div>
-        <div className="flex flex-col items-center justify-center gap-4 max-w-2xl">
+        <div className="flex flex-col items-center justify-center gap-2 max-w-2xl">
           {tries.map((tr, i) => i !== tryNumber ? (
-            <div key={i} className="w-full grid grid-cols-5 gap-4">
+            <div key={i} className="w-full grid grid-cols-5 gap-2">
               {[0, 1, 2, 3, 4].map((j) => (
                 <div
                   key={j}
-                  className={`border w-16 sm:w-24 h-16 sm:h-24 flex justify-center items-center uppercase text-5xl 
+                  className={`border w-14 sm:w-24 h-14 sm:h-24 flex justify-center items-center uppercase font-bold text-4xl 
                 ${typeof tr.at(j) === "undefined"
                       ? "bg-white"
                       : tr.at(j).toLowerCase() === secretWord.at(j).toLowerCase()
@@ -109,11 +115,11 @@ export default function App() {
               ))}
             </div>
           ) : (
-            <div key={i} className="w-full grid grid-cols-5 gap-4">
+            <div key={i} className="w-full grid grid-cols-5 gap-2">
               {[0, 1, 2, 3, 4].map((j) => (
                 <div
                   key={j}
-                  className={`border w-16 sm:w-24 h-16 sm:h-24 flex justify-center items-center uppercase bg-white text-5xl`}
+                  className={`border w-14 sm:w-24 h-14 sm:h-24 flex justify-center items-center uppercase bg-white font-bold text-4xl`}
                 >
                   {word.at(j)}
                 </div>
@@ -122,30 +128,7 @@ export default function App() {
           ))}
         </div>
       </div>
-      <div className="flex gap-2 px-4 items-center w-full max-w-2xl">
-        <input
-          type="text"
-          className="outline-none py-2 px-4 m-4 ml-0 shadow-lg rounded-lg focus:ring ring-green-200 flex-grow"
-          placeholder="Escribe una palabra de 5 letras"
-          ref={inputRef}
-          autoFocus={true}
-          value={word}
-          disabled={status !== ""}
-          onChange={(e) => setWord(e.target.value.substr(0, 5))}
-          onKeyDown={(e) => e.key === "Enter" && sendWord()}
-        />
-        {status === "" ? <button
-          className="bg-green-400 border-none shadow-lg rounded-lg py-2 px-4 text-white"
-          onClick={sendWord}
-        >
-          Enviar
-        </button> : <button
-          className="bg-blue-400 border-none shadow-lg rounded-lg py-2 px-4 text-white"
-          onClick={reset}
-        >
-          Reiniciar
-        </button>}
-      </div>
+      <Keyboard type={type} sendWord={sendWord} />
       <span className="mb-4 text-center italic text-sm text-slate-500"><span onClick={() => setJuego(secretWord)}>{juego}</span> desarrollado por <a href="https://gorkavillar.dev" target="_blank noreferrer" className="underline">Gorka Villar</a></span>
       <Modal
         showCloseIcon={false}
