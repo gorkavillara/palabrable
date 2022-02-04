@@ -64,7 +64,6 @@ export default function App() {
         newMisplacedKeys.push(char)
       }
     })
-    console.log({newSuccessKeys})
     setSuccessKeys([...successKeys, ...newSuccessKeys])
     setMisplacedKeys([...misplacedKeys, ...newMisplacedKeys])
     setFailedKeys([...failedKeys, ...newFailedKeys])
@@ -89,6 +88,9 @@ export default function App() {
     setUpdate(!update)
     setModalOpen(false)
     setStatus("")
+    setSuccessKeys([])
+    setMisplacedKeys([])
+    setFailedKeys([])
   }
 
   const type = key => {
