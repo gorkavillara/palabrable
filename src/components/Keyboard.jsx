@@ -9,9 +9,9 @@ const keys = [
 
 const Keyboard = ({ type }) => {
   return (
-    <div className="flex flex-col items-center gap-2">
+    <div className="flex flex-col items-center gap-1">
       {keys.map((row, i) => (
-        <div className="flex justify-evenly items-center gap-2" key={i}>
+        <div className="flex justify-evenly items-center gap-1" key={i}>
           {row.map((key, j) => (
             <>
               {key === "back" && (
@@ -35,7 +35,7 @@ const Keyboard = ({ type }) => {
               {key !== "back" && key !== "send" && (
                 <button
                   key={j}
-                  className="bg-slate-300 w-7 h-10 rounded-lg uppercase text-xl flex justify-center items-center"
+                  className="bg-slate-300 w-8 h-10 rounded-lg uppercase text-xl flex justify-center items-center"
                   onClick={() => type(key)}
                 >
                   <span>{key}</span>
