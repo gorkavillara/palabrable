@@ -6,6 +6,9 @@ import { successGifs, failGifs } from "./utils/list";
 import Keyboard from "./components/Keyboard";
 
 export default function App() {
+  const [successKeys, setSuccessKeys] = useState([]);
+  const [misplacedKeys, setMisplacedKeys] = useState([]);
+  const [failedKeys, setFailedKeys] = useState([]);
   const [secretWordIndex, setSecretWordIndex] = useState(0);
   const [secretWord, setSecretWord] = useState("");
   const [word, setWord] = useState("");
@@ -42,7 +45,30 @@ export default function App() {
       setTries(newTries);
     }
     setWord("");
+    updateKeyboard();
   };
+
+  const updateKeyboard = () => {
+    const lastTry = tries[tries.filter(t => t !== "").length - 1];
+    let newSuccessKeys = []
+    let newMisplacedKeys = []
+    let newFailedKeys = []
+    const chars = [0, 1, 2, 3, 4]
+    chars.forEach(i => {
+      const char = lastTry.at(i);
+      if (char.toLowerCase() === secretWord.at(i).toLowerCase()) {
+        newSuccessKeys.push(char)
+      } else if (secretWord.toLowerCase().indexOf(char.toLowerCase()) === -1) {
+        newFailedKeys.push(char)
+      } else {
+        newMisplacedKeys.push(char)
+      }
+    })
+    console.log({newSuccessKeys})
+    setSuccessKeys([...successKeys, ...newSuccessKeys])
+    setMisplacedKeys([...misplacedKeys, ...newMisplacedKeys])
+    setFailedKeys([...failedKeys, ...newFailedKeys])
+  }
 
   const getGifUrl = status => {
     let url = "/gifs/";
@@ -128,7 +154,7 @@ export default function App() {
           ))}
         </div>
       </div>
-      <Keyboard type={type} sendWord={sendWord} />
+      <Keyboard type={type} secretWord={secretWord} tries={tries} successKeys={successKeys} misplacedKeys={misplacedKeys} failedKeys={failedKeys} />
       <span className="mb-4 text-center italic text-sm text-slate-500"><span onClick={() => setJuego(secretWord)}>{juego}</span> desarrollado por <a href="https://gorkavillar.dev" target="_blank noreferrer" className="underline">Gorka Villar</a></span>
       <Modal
         showCloseIcon={false}
