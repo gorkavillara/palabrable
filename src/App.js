@@ -12,7 +12,7 @@ export default function App() {
   const [secretWordIndex, setSecretWordIndex] = useState(0);
   const [secretWord, setSecretWord] = useState("");
   const [word, setWord] = useState("");
-  const [tries, setTries] = useState(["", "", "", "", ""]);
+  const [tries, setTries] = useState(["", "", "", "", "", ""]);
   const [tryNumber, setTryNumber] = useState(0);
   const [update, setUpdate] = useState(false);
   const [status, setStatus] = useState("");
@@ -38,7 +38,7 @@ export default function App() {
     if (word.toLowerCase() === secretWord.toLowerCase()) {
       setStatus("success")
       setModalOpen(true)
-    } else if (tryNumber === 4) {
+    } else if (tryNumber === 5) {
       setStatus("fail")
       setModalOpen(true)
     } else {
@@ -83,7 +83,7 @@ export default function App() {
 
   const reset = () => {
     setTryNumber(0);
-    setTries(["", "", "", "", ""]);
+    setTries(["", "", "", "", "", ""]);
     setWord("");
     setUpdate(!update)
     setModalOpen(false)
@@ -156,7 +156,7 @@ export default function App() {
           ))}
         </div>
       </div>
-      <Keyboard type={type} secretWord={secretWord} tries={tries} successKeys={successKeys} misplacedKeys={misplacedKeys} failedKeys={failedKeys} />
+      <Keyboard type={type} reset={reset} status={status} tries={tries} successKeys={successKeys} misplacedKeys={misplacedKeys} failedKeys={failedKeys} />
       <span className="mb-4 text-center italic text-sm text-slate-500"><span onClick={() => setJuego(secretWord)}>{juego}</span> desarrollado por <a href="https://gorkavillar.dev" target="_blank noreferrer" className="underline">Gorka Villar</a></span>
       <Modal
         showCloseIcon={false}

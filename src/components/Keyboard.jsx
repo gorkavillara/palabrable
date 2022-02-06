@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from "react";
-import { IoSend, IoBackspaceOutline } from "react-icons/io5";
+import React from "react";
+import { IoSend, IoBackspaceOutline, IoRefresh } from "react-icons/io5";
 
 const keys = [
   ["q", "w", "e", "r", "t", "y", "u", "i", "o", "p"],
@@ -7,9 +7,16 @@ const keys = [
   ["z", "x", "c", "v", "b", "n", "m", "back", "send"],
 ];
 
-const Keyboard = ({ type, secretWord, tries, successKeys, misplacedKeys, failedKeys }) => {
+const Keyboard = ({
+  type,
+  successKeys,
+  misplacedKeys,
+  failedKeys,
+  reset,
+  status,
+}) => {
   return (
-    <div className="flex flex-col items-center gap-1">
+    <div className={`flex flex-col items-center gap-1`}>
       {keys.map((row, i) => (
         <div className="flex justify-evenly items-center gap-1" key={i}>
           {row.map((key, j) => (
@@ -29,11 +36,9 @@ const Keyboard = ({ type, secretWord, tries, successKeys, misplacedKeys, failedK
                 <button
                   key={j}
                   className="bg-blue-600 text-white w-14 h-10 rounded-lg uppercase text-2xl flex justify-center items-center"
-                  onClick={() => type(key)}
+                  onClick={() => (status === "" ? type(key) : reset())}
                 >
-                  <span>
-                    <IoSend />
-                  </span>
+                  <span>{status === "" ? <IoSend /> : <IoRefresh />}</span>
                 </button>
               )}
               {key !== "back" && key !== "send" && (
