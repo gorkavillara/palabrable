@@ -4,6 +4,7 @@ import 'react-responsive-modal/styles.css';
 import { palabras } from "./utils/palabras";
 import { successGifs, failGifs } from "./utils/list";
 import Keyboard from "./components/Keyboard";
+import AdSense from 'react-adsense';
 
 export default function App() {
   const [successKeys, setSuccessKeys] = useState([]);
@@ -157,6 +158,10 @@ export default function App() {
         </div>
       </div>
       <Keyboard type={type} reset={reset} status={status} tries={tries} successKeys={successKeys} misplacedKeys={misplacedKeys} failedKeys={failedKeys} />
+      <AdSense.Google
+        client='ca-pub-7313475970210959'
+        slot='9893978370'
+      />
       <span className="mb-4 text-center italic text-sm text-slate-500"><span onClick={() => setJuego(secretWord)}>{juego}</span> desarrollado por <a href="https://gorkavillar.dev" target="_blank noreferrer" className="underline">Gorka Villar</a></span>
       <Modal
         showCloseIcon={false}
