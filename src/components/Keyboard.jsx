@@ -20,10 +20,9 @@ const Keyboard = ({
       {keys.map((row, i) => (
         <div className="flex justify-evenly items-center gap-1" key={i}>
           {row.map((key, j) => (
-            <>
+            <React.Fragment key={j}>
               {key === "back" && (
                 <button
-                  key={j}
                   className="bg-slate-300 w-9 h-10 rounded-lg uppercase text-2xl flex justify-center items-center"
                   onClick={() => type(key)}
                 >
@@ -54,7 +53,7 @@ const Keyboard = ({
                   <span>{key}</span>
                 </button>
               )}
-            </>
+            </React.Fragment>
           ))}
         </div>
       ))}

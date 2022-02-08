@@ -26,6 +26,10 @@ export default function App() {
   }, [update]);
 
   useEffect(() => {
+    (window.adsbygoogle = window.adsbygoogle || []).push({});
+  }, [])
+
+  useEffect(() => {
     const newSecretWord = palabras[secretWordIndex]
       .normalize("NFD")
       .replace(/[\u0300-\u036f]/g, "");
