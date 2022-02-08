@@ -4,7 +4,7 @@ import 'react-responsive-modal/styles.css';
 import { palabras } from "./utils/palabras";
 import { successGifs, failGifs } from "./utils/list";
 import Keyboard from "./components/Keyboard";
-import AdSense from 'react-adsense';
+import AdSense from "./components/AdSense";
 
 export default function App() {
   const [successKeys, setSuccessKeys] = useState([]);
@@ -24,10 +24,6 @@ export default function App() {
     const index = Math.floor(Math.random() * palabras.length);
     setSecretWordIndex(index);
   }, [update]);
-
-  useEffect(() => {
-    (window.adsbygoogle = window.adsbygoogle || []).push({});
-  }, [])
 
   useEffect(() => {
     const newSecretWord = palabras[secretWordIndex]
@@ -162,10 +158,7 @@ export default function App() {
         </div>
       </div>
       <Keyboard type={type} reset={reset} status={status} tries={tries} successKeys={successKeys} misplacedKeys={misplacedKeys} failedKeys={failedKeys} />
-      <AdSense.Google
-        client='ca-pub-7313475970210959'
-        slot='9893978370'
-      />
+      <AdSense />
       <span className="mb-4 text-center italic text-sm text-slate-500"><span onClick={() => setJuego(secretWord)}>{juego}</span> desarrollado por <a href="https://gorkavillar.dev" target="_blank noreferrer" className="underline">Gorka Villar</a></span>
       <Modal
         showCloseIcon={false}
@@ -178,7 +171,9 @@ export default function App() {
           <h1 className="text-lg font-semibold text-green-600 text-center">¡Enhorabuena! ¿Quieres volver a intentarlo?</h1>
           <div className="flex gap-4">
             <button className="border border-red-500 text-red-500 rounded-lg py-1 px-2" onClick={() => setModalOpen(false)}>No por ahora...</button>
-            <button className="bg-green-500 text-white border border-green-500 rounded-lg py-1 px-2" onClick={reset}>¡Pues claro!</button></div>
+            <button className="bg-green-500 text-white border border-green-500 rounded-lg py-1 px-2" onClick={reset}>¡Pues claro!</button>
+          </div>
+          <AdSense />
         </div>}
         {status === "fail" && <div className="flex flex-col justify-center items-center gap-4">
           <img src={getGifUrl("fail")} alt="¡Fallaste!" />
@@ -186,7 +181,9 @@ export default function App() {
           <h1 className="text-lg text-slate-600 text-center">La respuesta correcta era... <span className="uppercase font-bold">{secretWord}</span></h1>
           <div className="flex gap-4">
             <button className="border border-red-500 text-red-500 rounded-lg py-1 px-2" onClick={() => setModalOpen(false)}>No por ahora...</button>
-            <button className="bg-green-500 text-white border border-green-500 rounded-lg py-1 px-2" onClick={reset}>¡Pues claro!</button></div>
+            <button className="bg-green-500 text-white border border-green-500 rounded-lg py-1 px-2" onClick={reset}>¡Pues claro!</button>
+          </div>
+          <AdSense />
         </div>}
       </Modal>
     </div>
