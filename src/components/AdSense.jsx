@@ -7,7 +7,7 @@ const AdSense = () => {
   return (
     <ins
       className="adsbygoogle"
-      style={{ display: "block", width: "100vw", height: 320 }}
+      style={{ display: "block", width: 320, height: 50 }}
       data-ad-client="ca-pub-7313475970210959"
       data-ad-slot="9893978370"
       data-ad-format="auto"
