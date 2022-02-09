@@ -157,8 +157,8 @@ export default function App() {
         </div>
       </div>
       <Keyboard type={type} reset={reset} status={status} tries={tries} successKeys={successKeys} misplacedKeys={misplacedKeys} failedKeys={failedKeys} />
-      <AdSense />
-      <span className="mb-4 text-center italic text-sm text-slate-500"><span onClick={() => setJuego(secretWord)}>{juego}</span> desarrollado por <a href="https://gorkavillar.dev" target="_blank noreferrer" className="underline">Gorka Villar</a></span>
+      {/* <AdSense /> */}
+      <span className="my-4 text-center italic text-sm text-slate-500"><span onClick={() => setJuego(secretWord)}>{juego}</span> desarrollado por <a href="https://gorkavillar.dev" target="_blank noreferrer" className="underline">Gorka Villar</a></span>
       <Modal
         showCloseIcon={false}
         open={modalOpen}
@@ -172,7 +172,7 @@ export default function App() {
             <button className="border border-red-500 text-red-500 rounded-lg py-1 px-2" onClick={() => setModalOpen(false)}>No por ahora...</button>
             <button className="bg-green-500 text-white border border-green-500 rounded-lg py-1 px-2" onClick={reset}>¡Pues claro!</button>
           </div>
-          <AdSense />
+          {/* <AdSense /> */}
         </div>}
         {status === "fail" && <div className="flex flex-col justify-center items-center gap-4">
           <img src={getGifUrl("fail")} alt="¡Fallaste!" />
@@ -182,7 +182,7 @@ export default function App() {
             <button className="border border-red-500 text-red-500 rounded-lg py-1 px-2" onClick={() => setModalOpen(false)}>No por ahora...</button>
             <button className="bg-green-500 text-white border border-green-500 rounded-lg py-1 px-2" onClick={reset}>¡Pues claro!</button>
           </div>
-          <AdSense />
+          {/* <AdSense /> */}
         </div>}
       </Modal>
       <Toaster position="top-center" />
