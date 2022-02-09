@@ -2,9 +2,11 @@ import { useEffect, useState } from "react";
 import { Modal } from "react-responsive-modal";
 import 'react-responsive-modal/styles.css';
 import { palabras } from "./utils/palabras";
+import { dicc } from "./utils/dicc";
 import { successGifs, failGifs } from "./utils/list";
 import Keyboard from "./components/Keyboard";
 import AdSense from "./components/AdSense";
+import toast, { Toaster } from 'react-hot-toast';
 
 export default function App() {
   const [successKeys, setSuccessKeys] = useState([]);
@@ -33,8 +35,11 @@ export default function App() {
   }, [secretWordIndex]);
 
   const sendWord = () => {
-    setTryNumber(tryNumber + 1);
     const newTries = tries;
+    if (!dicc.includes(word.toLowerCase())) {
+      return toast('Esa palabra no existe, prueba con otra.');
+    }
+    setTryNumber(tryNumber + 1);
     newTries[tryNumber] = word;
     if (word.toLowerCase() === secretWord.toLowerCase()) {
       setStatus("success")
@@ -106,13 +111,7 @@ export default function App() {
 
   return (
     <div className="flex flex-col justify-between items-center min-h-screen">
-      <div
-        onClick={(e) => {
-          console.log(e.key);
-          if (e.key === "enter") return alert("hola");
-        }}
-        className="flex flex-col items-center p-6 gap-8"
-      >
+      <div className="flex flex-col items-center p-6 gap-8">
         <div className="flex items-center justify-center gap-8">
           <picture className="w-12 h-12 flex justify-center items-center"><img src="/palabrable_64.png" alt="logo" /></picture>
           <div className="flex flex-col items-baseline">
@@ -126,14 +125,14 @@ export default function App() {
               {[0, 1, 2, 3, 4].map((j) => (
                 <div
                   key={j}
-                  className={`border w-14 sm:w-24 h-14 sm:h-24 flex justify-center items-center uppercase font-bold text-4xl 
+                  className={`border rounded-lg w-14 sm:w-24 h-14 sm:h-24 flex justify-center items-center uppercase font-bold text-4xl 
                 ${typeof tr.at(j) === "undefined"
                       ? "bg-white"
                       : tr.at(j).toLowerCase() === secretWord.at(j).toLowerCase()
-                        ? "bg-green-400 text-white"
+                        ? "bg-green-400 text-white border-green-400"
                         : secretWord.toLowerCase().indexOf(tr.at(j).toLowerCase()) === -1
-                          ? "bg-gray-500 text-white"
-                          : "bg-yellow-400"
+                          ? "bg-gray-500 border-gray-500 text-white"
+                          : "bg-yellow-400 border-yellow-400"
                     }
                     ${i > tryNumber && "opacity-40"
                     }
@@ -148,7 +147,7 @@ export default function App() {
               {[0, 1, 2, 3, 4].map((j) => (
                 <div
                   key={j}
-                  className={`border w-14 sm:w-24 h-14 sm:h-24 flex justify-center items-center uppercase bg-white font-bold text-4xl`}
+                  className={`border rounded-lg w-14 sm:w-24 h-14 sm:h-24 flex justify-center items-center uppercase bg-white font-bold text-4xl`}
                 >
                   {word.at(j)}
                 </div>
@@ -186,6 +185,7 @@ export default function App() {
           <AdSense />
         </div>}
       </Modal>
+      <Toaster position="top-center" />
     </div>
   );
 }
