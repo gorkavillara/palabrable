@@ -7,13 +7,14 @@ const keys = [
   ["send", "z", "x", "c", "v", "b", "n", "m", "back"],
 ];
 
+
 const Keyboard = ({
   type,
-  successKeys,
-  misplacedKeys,
-  failedKeys,
+  successKeys = [],
+  misplacedKeys = [],
+  failedKeys = [],
   reset,
-  status,
+  status = "",
 }) => {
   return (
     <div className={`flex flex-col items-center gap-1`}>
